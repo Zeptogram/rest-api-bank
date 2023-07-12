@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="../static/css/normalize.css">
+        <link rel="stylesheet" href="../static/css/skeleton.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <title>Banca - Progetto Sistemi Distribuiti</title>
+
+        <style>
+            .transaction tr:last-child {
+                font-weight: bold;
+            }
+
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="text-align: center">Home - Banca - Progetto Sistemi Distribuiti</h1>
+            <div class="row" style="text-align: center">
+                <a class="button">Home</a>
+                <a class="button button-primary" href="/transfer">Trasferisci</a>
+                <a class="button button-primary" href="/deposit-withdraw">Deposita/Preleva</a>
+                <a class="button button-primary" href="/divert">Annulla</a>
+                <a class="button button-primary" href="/create">Crea</a>
+                <a class="button button-primary" href="/list">Lista</a>
+                <a class="button button-primary" href="/delete">Elimina</a>
+            </div>
+            <div class="row" style="margin-top: 40px;">
+                <label for="accountId">Account Id</label>
+                <input class="u-full-width" type="text" id="accountId">
+                <button class="button-primary" id="sendAccountId" onclick="popola()">Accedi</button>
+            </div>
+            <div class="row" id="datiAccount" style="text-align: center;" hidden>
+
+            </div>
+            <div class="footer">
+                <h5>Realizzato da Gargiulo Elio (Mat: 869184) e Rigato Stefano (Mat: 869441)</h5>
+            </div>
+        </div>
+        <script>
+            function checkValidityAccountId(accountId) {
+                return /^[0-9a-f]{20}$/.test(accountId);
+            }
+
+            function popola() {
+                let accountId = document.getElementById("accountId").value;
+                let apiURL = "/api/account/" + accountId;
+                let divDatiAccount = document.getElementById("datiAccount");
+                divDatiAccount.innerHTML = "";
+
+                var requestOptions = {
+                  method: 'GET',
+                  redirect: 'follow'
+                };
+
+                if (checkValidityAccountId(accountId)) {
+                    fetch(apiURL, requestOptions)
+                        .then(response => response.json())
+                        .then(result => {
+                            let accountTable = "<table class='u-full-width'><thead><tr><th>Nome</th><th>Cognome</th><th>Saldo</th></tr></thead><tbody><tr>"
+                            accountTable += "<td>" + result.name + "</td>";
+                            accountTable += "<td>" + result.surname + "</td>";
+                            accountTable += "<td>" + result.saldo + "</td>";
+                            accountTable += "</tr></tbody></table>";
+                            
+                            if (result.transazioni.length != 0) {
+                                let transactionTable = "<table class='u-full-width transaction'><thead style='position: sticky; top: 0; background: white;'><tr><th>ID Transazione</th><th>Mittente</th><th>Destinatario</th><th>Quantità</th><th>Annullata</th><th>Data</th></tr></thead><tbody>";
+                                let countTransaction = 0;
+                                
+                                for(let i = 0; i < result.transazioni.length; i++) {
+                                    if (result.transazioni[i].from != result.transazioni[i].to) {
+                                        transactionTable += "<tr>";
+                                        // table += "<td>Transazione " + (i + 1) + "</td>";
+                                        transactionTable += "<td>" + result.transazioni[i].transactionId + "</td>";
+                                        transactionTable += "<td>" + result.transazioni[i].from + "</td>";
+                                        transactionTable += "<td>" + result.transazioni[i].to + "</td>";
+                                        transactionTable += "<td>" + result.transazioni[i].amount + "</td>";
+                                        transactionTable += "<td>" + result.transazioni[i].diverted + "</td>";
+                                        transactionTable += "<td>" + result.transazioni[i].date + "</td>";
+                                        transactionTable += "</tr>";
+
+                                        countTransaction++;
+                                    }
+                                }
+                                transactionTable += "</tbody></table>";
+                                
+                                if (countTransaction == 0) {
+                                    divDatiAccount.innerHTML += accountTable + "<h4>Questo account non presenta transazioni verso/da altri account.";
+                                    divDatiAccount.removeAttribute("hidden");
+                                }      
+                                else {
+                                    divDatiAccount.innerHTML += accountTable + transactionTable;
+                                    divDatiAccount.removeAttribute("hidden");
+                                }
+                            } else {
+                                divDatiAccount.innerHTML += accountTable + "<h4>Questo account non presenta transazioni verso/da altri account.";
+                                divDatiAccount.removeAttribute("hidden");
+                            }
+                            
+                        })
+                        .catch(error => {
+                            console.log('error', error);
+                            divDatiAccount.innerHTML = "<h4>Errore: ID Account non trovato!</h4>";
+                            divDatiAccount.removeAttribute("hidden");
+                        });
+                } else {
+                    divDatiAccount.innerHTML = "<h4>Errore: Dati non validi!</h4>";
+                    divDatiAccount.removeAttribute("hidden");
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,137 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="../static/css/normalize.css">
+        <link rel="stylesheet" href="../static/css/skeleton.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <title>Banca - Progetto Sistemi Distribuiti</title>
+
+        <style>
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="text-align: center">Deposita/Prelieva - Banca - Progetto Sistemi Distribuiti</h1>
+            <div class="row" style="text-align: center">
+                <a class="button button-primary" href="/">Home</a>
+                <a class="button button-primary" href="/transfer">Trasferisci</a>
+                <a class="button">Deposita/Preleva</a>
+                <a class="button button-primary" href="/divert">Annulla</a>
+                <a class="button button-primary" href="/create">Crea</a>
+                <a class="button button-primary" href="/list">Lista</a>
+                <a class="button button-primary" href="/delete">Elimina</a>
+            </div>
+            <div class="row" style="margin-top: 40px;">
+                <div class="six columns">
+                    <label for="accountId">ID Account</label>
+                    <input class="u-full-width" type="text" id="accountId">
+                </div>
+                <div class="six columns">
+                    <label for="amount">Quantità</label>
+                    <input class="u-full-width" type="number" id="amount">
+                </div>
+                <button class="button-primary" id="sendAmountDeposit" onclick="deposit()">Deposita</button>
+                <button class="button-primary" id="sendAmountWithdraw" onclick="withdraw()">Preleva</button>
+            </div>
+            <div class="row" id="esito" style="text-align: center;" hidden>
+
+            </div>
+            <div class="footer">
+                <h5>Realizzato da Gargiulo Elio (Mat: 869184) e Rigato Stefano (Mat: 869441)</h5>
+            </div>
+        </div>
+        <script>
+            function checkValidityAccountId(accountId) {
+                return /^[0-9a-f]{20}$/.test(accountId);
+            }
+
+            function checkValidityNumber(number) {
+                return /^(\d+|\d+\.\d{1,2})$/.test(number);
+            }
+
+            function deposit() {
+                let accountId = document.getElementById("accountId").value;
+                let apiURL = "/api/account/" + accountId;
+                let amount = document.getElementById("amount").value;
+                var postBody = '{ "amount": "' + amount + '" }';
+                let esito = document.getElementById("esito");
+                esito.innerHTML = "";
+
+                var requestOptions = {
+                    method: 'POST',
+                    body: postBody,
+                    redirect: 'follow'
+                };
+
+                if (checkValidityAccountId(accountId) && checkValidityNumber(amount)) {
+                    fetch(apiURL, requestOptions)
+                        .then(response => response.json())
+                        .then(result => {
+                            esito.innerHTML = "<h4>Deposito riuscito!</h4>";
+                            esito.innerHTML += "<h4>Ora il saldo totale è di: " + result.saldo + "</h4>";
+                            esito.removeAttribute("hidden");
+                        })
+                        .catch(error => {
+                            console.log('error', error);
+                            esito.innerHTML = "<h4>Errore: Richiesta non valida!</h4>";
+                            esito.removeAttribute("hidden");
+                        });
+                } else {
+                    esito.innerHTML = "<h4>Errore: Dati non validi!</h4>";
+                    esito.removeAttribute("hidden");
+                }
+            }
+
+            function withdraw() {
+                let esito = document.getElementById("esito");
+                esito.innerHTML = "";
+                let accountId = document.getElementById("accountId").value;
+                let apiURL = "/api/account/" + accountId;
+                let amount = document.getElementById("amount").value;
+                if (checkValidityNumber(amount)) {
+                    amount = -amount;
+                    var postBody = '{ "amount": "' + amount + '" }';
+
+                    var requestOptions = {
+                        method: 'POST',
+                        body: postBody,
+                        redirect: 'follow'
+                    };
+                    
+                    var status
+                    if (checkValidityAccountId(accountId)) {
+                        fetch(apiURL, requestOptions)
+                            .then(response => {
+                                response.json();
+                                status = response.status;
+                            })
+                            .then(result => {
+                                esito.innerHTML = "<h4>Prelievo riuscito!</h4>";
+                                esito.innerHTML += "<h4>Ora il saldo totale è di: " + result.saldo + "</h4>";
+                                esito.removeAttribute("hidden");
+                            })
+                            .catch(error => {
+                                console.log('error', error);
+                                if (status == 403)
+                                    esito.innerHTML = "<h4>Errore: Credito insufficiente!</h4>";
+                                else if (status == 404)
+                                    esito.innerHTML = "<h4>Errore: ID Account non trovato!</h4>";
+                                esito.removeAttribute("hidden");
+                            });
+                    } else {
+                        esito.innerHTML = "<h4>Errore: Dati non validi!</h4>";
+                        esito.removeAttribute("hidden");
+                    }
+                } else {
+                    esito.innerHTML = "<h4>Errore: Quantità non validi!</h4>";
+                    esito.removeAttribute("hidden");
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="../static/css/normalize.css">
+        <link rel="stylesheet" href="../static/css/skeleton.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <title>Banca - Progetto Sistemi Distribuiti</title>
+
+        <style>
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="text-align: center">Lista - Banca - Progetto Sistemi Distribuiti</h1>
+            <div class="row" style="text-align: center">
+                <a class="button button-primary" href="/">Home</a>
+                <a class="button button-primary" href="/transfer">Trasferisci</a>
+                <a class="button button-primary" href="/deposit-withdraw">Deposita/Preleva</a>
+                <a class="button button-primary" href="/divert">Annulla</a>
+                <a class="button button-primary" href="/create">Crea</a>
+                <a class="button">Lista</a>
+                <a class="button button-primary" href="/delete">Elimina</a>
+            </div>
+            <div class="row" id="esito" style="margin-top: 40px; text-align: center;" hidden>
+
+            </div>
+            <div class="footer">
+                <h5>Realizzato da Gargiulo Elio (Mat: 869184) e Rigato Stefano (Mat: 869441)</h5>
+            </div>
+        </div>
+        <script>
+            function list() {
+                let esito = document.getElementById("esito");
+                esito.innerHTML = "";
+
+                var requestOptions = {
+                    method: 'GET',
+                    redirect: 'follow'
+                };
+
+                fetch("/api/account", requestOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        let accountTable = "<table class='u-full-width'><thead style='position: sticky; top: 0; background: white;'><tr><th>Nome</th><th>Cognome</th><th>Saldo</th><th>ID Account</th></tr></thead><tbody>";
+                        for(let i = 0; i < result.length; i++) {
+                            accountTable += "<tr>";
+                            accountTable += "<td>" + result[i].name + "</td>";
+                            accountTable += "<td>" + result[i].surname + "</td>";
+                            accountTable += "<td>" + result[i].saldo + "</td>";
+                            accountTable += "<td>" + result[i].accountId + "</td>";
+                            accountTable += "</tr>";
+                        }
+                        accountTable += "</tbody></table>";
+
+                        esito.innerHTML += accountTable;
+                        esito.removeAttribute("hidden");
+                    })
+                    .catch(error => {
+                        console.log('error', error);
+                        esito.innerHTML = "<h4>Errore: Non sono presenti Account nel sistema!</h4>";
+                        esito.removeAttribute("hidden");
+                    });
+            }
+
+            window.onload = list();
+        </script>
+    </body>
+</html>

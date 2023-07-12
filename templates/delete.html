@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="../static/css/normalize.css">
+        <link rel="stylesheet" href="../static/css/skeleton.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <title>Banca - Progetto Sistemi Distribuiti</title>
+
+        <style>
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="text-align: center">Elimina - Banca - Progetto Sistemi Distribuiti</h1>
+            <div class="row" style="text-align: center">
+                <a class="button button-primary" href="/">Home</a>
+                <a class="button button-primary" href="/transfer">Trasferisci</a>
+                <a class="button button-primary" href="/deposit-withdraw">Deposita/Preleva</a>
+                <a class="button button-primary" href="/divert">Annulla</a>
+                <a class="button button-primary" href="/create">Crea</a>
+                <a class="button button-primary" href="/list">Lista</a>
+                <a class="button">Elimina</a>
+            </div>
+            <div class="row" style="margin-top: 40px;">
+                <label for="accountId">Account Id</label>
+                <input class="u-full-width" type="text" id="accountId">
+                <button class="button-primary" id="sendAccountId" onclick="deleteAccount()">Elimina Account</button>
+            </div>
+            <div class="row" id="esito" style="text-align: center;" hidden>
+
+            </div>
+            <div class="footer">
+                <h5>Realizzato da Gargiulo Elio (Mat: 869184) e Rigato Stefano (Mat: 869441)</h5>
+            </div>
+        </div>
+        <script>
+            function checkValidityAccountId(accountId) {
+                return /^[0-9a-f]{20}$/.test(accountId);
+            }
+
+            function deleteAccount() {
+                let accountId = document.getElementById("accountId").value;
+                let apiURL = "/api/account?id=" + accountId;
+                let esito = document.getElementById("esito");
+                esito.innerHTML = "";
+
+                var requestOptions = {
+                  method: 'DELETE',
+                  redirect: 'follow'
+                };
+
+                if (checkValidityAccountId(accountId)) {
+                    fetch(apiURL, requestOptions)
+                        .then(response => response.json())
+                        .then(result => {
+                            esito.innerHTML = "<h4>Account eliminato con successo!</h4>";
+                            esito.removeAttribute("hidden");
+                        })
+                        .catch(error => {
+                            console.log('error', error);
+                            esito.innerHTML = "<h4>Errore: ID Account non trovato!</h4>";
+                            esito.removeAttribute("hidden");
+                        });
+                } else {
+                    esito.innerHTML = "<h4>Errore: ID Account non valido!</h4>";
+                    esito.removeAttribute("hidden");
+                }
+            }
+        </script>
+    </body>
+</html>

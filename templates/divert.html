@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="../static/css/normalize.css">
+        <link rel="stylesheet" href="../static/css/skeleton.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <title>Banca - Progetto Sistemi Distribuiti</title>
+
+        <style>
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 style="text-align: center">Annulla Transazione - Banca - Progetto Sistemi Distribuiti</h1>
+            <div class="row" style="text-align: center">
+                <a class="button button-primary" href="/">Home</a>
+                <a class="button button-primary" href="/transfer">Trasferisci</a>
+                <a class="button button-primary" href="/deposit-withdraw">Deposita/Preleva</a>
+                <a class="button">Annulla</a>
+                <a class="button button-primary" href="/create">Crea</a>
+                <a class="button button-primary" href="/list">Lista</a>
+                <a class="button button-primary" href="/delete">Elimina</a>
+            </div>
+            <div class="row" style="margin-top: 40px;">
+                <label for="transactionId">ID Transazione</label>
+                <input class="u-full-width" type="text" id="transactionId">
+                <button class="button-primary" id="sendTransactionId" onclick="divert()">Annulla</button>
+            </div>
+            <div class="row" id="esito" style="text-align: center;" hidden>
+
+            </div>
+            <div class="footer">
+                <h5>Realizzato da Gargiulo Elio (Mat: 869184) e Rigato Stefano (Mat: 869441)</h5>
+            </div>
+        </div>
+        <script>
+            function checkValidityTransactionId(transactionId) {
+                return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(transactionId);
+            }
+
+            function divert() {
+                let transactionId = document.getElementById("transactionId").value;
+                var postBody = '{ "id": "' + transactionId + '" }';
+                let esito = document.getElementById("esito");
+                esito.innerHTML = "";
+
+                var requestOptions = {
+                    method: 'POST',
+                    body: postBody,
+                    redirect: 'follow'
+                };
+
+                if (checkValidityTransactionId(transactionId)) {
+                    fetch("/api/divert", requestOptions)
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.hasOwnProperty('divert')) {
+                                esito.innerHTML = "<h4>" + result.divert + "</h4>";
+                            }
+                            else {
+                                esito.innerHTML = "<h4>Deviazione riuscita!</h4>";
+                            }
+                            esito.removeAttribute("hidden");
+                        })
+                        .catch(error => {
+                            console.log('error', error);
+                            esito.innerHTML = "<h4>Errore: ID Transazione non trovata o Account Eliminato!</h4>";
+                            esito.removeAttribute("hidden");
+                        });
+                } else {
+                    esito.innerHTML = "<h4>Errore: ID Transazione non valida!</h4>";
+                    esito.removeAttribute("hidden");
+                }
+            }
+        </script>
+    </body>
+</html>
