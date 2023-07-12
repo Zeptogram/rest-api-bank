@@ -3,7 +3,7 @@
 Installazioni:
 - [Installazione Windows](#Installazione_Windows)
 - [Installazione Linux](#Installazione_Linux)
-- [Utilizzo Applicazione e API](#Utilizzo_dell'applicazione_e_API)
+- [Utilizzo Applicazione e API](#Utilizzo_Applicazione_e_API)
 - [Autori e Info](#Autori)
 
 ## Installazione_Windows
@@ -232,7 +232,7 @@ python3 -m flask run
 
 <hr>
 
-### Utilizzo_dell'applicazione_e_API
+### Utilizzo_Applicazione_e_API
 - Per utilizzare l'applicazione, si faccia riferimento al file pdf __"traccia.pdf"__ nella directory principale del progetto.
 - Per una descrizione più dettagliata del funzionamento dell'API si faccia riferimento ai seguenti link: 
 - [SERVIZIO: /api/account](https://documenter.getpostman.com/view/21507621/UzBmLSXp)
