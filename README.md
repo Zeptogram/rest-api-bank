@@ -1,4 +1,4 @@
-# Sistemi Distribuiti - Progetto 2
+# Sistemi Distribuiti - Progetto Banca
 ## Indice
 Installazioni:
 - [Installazione Windows](#Installazione%20Windows)
