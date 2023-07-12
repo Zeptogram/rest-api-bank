@@ -240,6 +240,9 @@ python3 -m flask run
 - [SERVIZIO: /api/divert](https://documenter.getpostman.com/view/21507621/UzBmLSXr)
 - [SERVIZIO: /api/transfer](https://documenter.getpostman.com/view/21507621/UzBmLSc7)
 
+<hr>
+
+
 ### Autori
 Progetto realizzato da:
 - Elio Gargiulo - 869184
@@ -267,3 +270,6 @@ id | accountId1 | accountId1 |  10.00 |        0 | 2022-06-16 14:49:38 |
 - __/deposit-withdraw__: Pagina html che permette di depositare/prelevare denaro. Se si utilizza la funzione di prelievo, non è necessario inserire il segno meno (che invece è chiesto nell'uso diretto della API).
 - __/divert__: Pagina html che permette l'annullamento di una transazione.
 - __/list__: Pagina html che mostra tutti gli account presenti nel sistema.
+
+<hr>
+
