@@ -1,12 +1,12 @@
 # Sistemi Distribuiti - Progetto "Sistema Bancario"
 ## Indice
 Installazioni:
-- [Installazione Windows](#Installazione%20Windows)
-- [Installazione Linux](#Installazione%20Linux)
-- [Utilizzo Applicazione e API](#Utilizzo%20dell'applicazione%20e%20API)
+- [Installazione Windows](#Installazione_Windows)
+- [Installazione Linux](#Installazione_Linux)
+- [Utilizzo Applicazione e API](#Utilizzo_dell'applicazione_e_API)
 - [Autori e Info](#Autori)
 
-## Installazione Windows
+## Installazione_Windows
 Questa è la guida per l'installazione del progetto "Sistema Bancario" in un ambiente __Windows__.
 
 ## Prima di iniziare
@@ -110,7 +110,7 @@ python -m flask run
 
 <hr>
 
-## Installazione Linux
+## Installazione_Linux
 Questa è la guida per l'installazione del progetto "Sistema Bancario" in un ambiente __Linux__.
 
 ## Prima di iniziare
@@ -232,7 +232,7 @@ python3 -m flask run
 
 <hr>
 
-### Utilizzo dell'applicazione e API
+### Utilizzo_dell'applicazione_e_API
 - Per utilizzare l'applicazione, si faccia riferimento al file pdf __"traccia.pdf"__ nella directory principale del progetto.
 - Per una descrizione più dettagliata del funzionamento dell'API si faccia riferimento ai seguenti link: 
 - [SERVIZIO: /api/account](https://documenter.getpostman.com/view/21507621/UzBmLSXp)
