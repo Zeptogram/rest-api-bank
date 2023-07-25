@@ -21,7 +21,10 @@ Questa è la guida per l'installazione del progetto "Sistema Bancario" in un amb
 - Selezionare la versione __Windows Installer__ per la vostra macchina (64 o 32 bit). 
 - Procedere con una normale installazione e selezionare la spunta ove l'installazione richiede __l'aggiunta di Python nelle variabili di ambiente di sistema__ (Add Python 3.10 to PATH).
 
-![Installazione di Python](images/python-1.png)
+
+<p align="center">
+  <img width="500" heigth="500" src="images/python-1.png">
+</p>
 
 - Aprire il __CMD__ per verificare l'installazione, digitare quindi i seguenti comandi:
 
@@ -44,11 +47,15 @@ python get-pip.py
 - Scaricare __MySQL dal seguente link__: https://dev.mysql.com/downloads/file/?id=511552
 - Procedere con l'installazione selezionando __Server Only__
 
-![Installazione di MySQL](images/mysql-1.png)
+<p align="center">
+  <img width="500" heigth="500" src="images/mysql-1.png">
+</p>
 
 - Si proceda seguendo l'installer, quindi premendo Next e Execute per ogni prompt fino ad arrivare al seguente: Si inserisca due volte la password __root__.
 
-![Configurazione Account MySQL](images/mysql-2.png)
+<p align="center">
+  <img width="500" heigth="500" src="images/mysql-2.png">
+</p>
 
 - Si proceda con la conclusione dell'installazione attraverso i bottoni __Next__ o __Execute__.
 - Eseguire il file .bat __come Amministratore "startMySQL.bat"__ recuperabile nella cartella "Installazione" della cartella del progetto. Inserire __"root"__ nella richiesta di input del __CMD__.
