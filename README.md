@@ -1,4 +1,9 @@
 # Sistemi Distribuiti - Progetto "Sistema Bancario"
+![Windows](https://img.shields.io/static/v1?style=for-the-badge&message=Windows&color=0078D4&logo=Windows&logoColor=FFFFFF&label=)
+![Linux](https://img.shields.io/static/v1?style=for-the-badge&message=Linux&color=222222&logo=Linux&logoColor=FCC624&label=)
+![Python](https://img.shields.io/static/v1?style=for-the-badge&message=Python&color=3776AB&logo=Python&logoColor=FFFFFF&label=)
+![Flask](https://img.shields.io/static/v1?style=for-the-badge&message=Flask&color=000000&logo=Flask&logoColor=FFFFFF&label=)
+![PythonAnywhere](https://img.shields.io/static/v1?style=for-the-badge&message=PythonAnywhere&color=1D9FD7&logo=PythonAnywhere&logoColor=FFFFFF&label=)
 ## Indice
 Installazioni:
 - [Installazione Windows](#Installazione_Windows)
