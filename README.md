@@ -6,12 +6,12 @@
 ![PythonAnywhere](https://img.shields.io/static/v1?style=for-the-badge&message=PythonAnywhere&color=1D9FD7&logo=PythonAnywhere&logoColor=FFFFFF&label=)
 ## Indice
 Installazioni:
-- [Installazione Windows](#Installazione_Windows)
-- [Installazione Linux](#Installazione_Linux)
-- [Utilizzo Applicazione e API](#Utilizzo_Applicazione_e_API)
+- [Installazione Windows](#Installazione-Windows)
+- [Installazione Linux](#Installazione-Linux)
+- [Utilizzo Applicazione e API](#Utilizzo-Applicazione-e-API)
 - [Autori e Info](#Autori)
 
-## Installazione_Windows
+## Installazione Windows
 Questa è la guida per l'installazione del progetto "Sistema Bancario" in un ambiente __Windows__.
 
 ## Prima di iniziare
@@ -122,7 +122,7 @@ python -m flask run
 
 <hr>
 
-## Installazione_Linux
+## Installazione Linux
 Questa è la guida per l'installazione del progetto "Sistema Bancario" in un ambiente __Linux__.
 
 ## Prima di iniziare
@@ -244,7 +244,7 @@ python3 -m flask run
 
 <hr>
 
-### Utilizzo_Applicazione_e_API
+### Utilizzo Applicazione e API
 - Per utilizzare l'applicazione, si faccia riferimento al file pdf __"traccia.pdf"__ nella directory principale del progetto.
 - Per una descrizione più dettagliata del funzionamento dell'API si faccia riferimento ai seguenti link: 
 - [SERVIZIO: /api/account](https://documenter.getpostman.com/view/21507621/UzBmLSXp)
